@@ -28,7 +28,7 @@ let handleDates = function () {
     //Reference our returned array
     var plannerHours = pushDates()
     //Test time
-    const currentTimeTest = moment().hours(15).format("HH");
+    const currentTimeTest = moment().hours(11).format("HH");
     var priorHoursArr = [];
     var futureHoursArr = [];
     var currentHour;
@@ -89,7 +89,43 @@ let handleDates = function () {
 
 }
 
+
+let updateText = function () {
+    const descriptionEls = $(".description");
+    var clickableEl = $('.clickable-font');
+
+    var nearestDes = clickableEl.last('.description');
+
+    // console.log(descriptionEls);
+
+    // console.log(clickableEl);
+
+    clickableEl.on('click', function () {
+
+        var nearestDes = $(this).closest('.description');
+        console.log(nearestDes);
+        nearestDes.text("Hello");
+        // if (descriptionEls.indexOf(clickableEl)) {
+        //     descriptionEls.textContent = "Hello";
+        // }
+
+        // console.log(clickableEl.)
+
+        // descriptionEls.textContent = "Hello";
+
+
+
+        descriptionEls[2].textContent = '2';
+        console.log("Clicked");
+        nearestDes.textContent = "";
+    });
+
+
+}
+
 handleDates();
+
+updateText();
 
 // setTimeBlockColors();
 
