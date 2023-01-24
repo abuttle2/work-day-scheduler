@@ -54,78 +54,46 @@ let handleDates = function () {
         }
     }
 
-    //     //Store 
-    //     var hoursObj = {
-    //         priorHours: priorHoursArr,
-    //         futureHours: futureHoursArr,
-    //         currentHour: currentHour
-    //     }
 
-    //     return hoursObj;
-    // }
+    let updateText = function () {
+        const descriptionEls = $(".description");
+        var clickableEl = $('.clickable-font');
 
-    // let setTimeBlockColors = function () {
-    //     const timeBlockEls = $(".time-block")
-    //     const timeBlockElTxt = $(".time-block").text();
-    //     var datesObj = handleDates();
-    //     // console.log(datesObj);
+        var nearestDes = clickableEl.last('.description');
 
-    //     for (var i = 0; i < datesObj.priorHours.length; i++) {
-    //         var priorHoursHa = moment(datesObj.priorHours[i], "HH").format("HH");
-    //         console.log(priorHoursHa);
+        // console.log(descriptionEls);
 
-    //         var formattedTextBlock = moment(timeBlockEls[i], "ha").format("HH");
+        // console.log(clickableEl);
 
-    //         console.log(formattedTextBlock);
+        clickableEl.on('click', function () {
 
-    //         // Check if current hour
-    //         if (formattedTextBlock === datesObj.currentHour) {
-    //             console.log("WOOO");
-    //         }
+            // var nearestDes = $(this).closest('.description');
+            // console.log(nearestDes);
+            // nearestDes.text("Hello");
+            // if (descriptionEls.indexOf(clickableEl)) {
+            //     descriptionEls.textContent = "Hello";
+            // }
 
+            var nearestDes = $(this).closest('tr').find('.description');
+            console.log(nearestDes.text("yo"));
 
-    //     }
-    // }
+            // console.log(clickableEl.)
 
-}
-
-
-let updateText = function () {
-    const descriptionEls = $(".description");
-    var clickableEl = $('.clickable-font');
-
-    var nearestDes = clickableEl.last('.description');
-
-    // console.log(descriptionEls);
-
-    // console.log(clickableEl);
-
-    clickableEl.on('click', function () {
-
-        var nearestDes = $(this).closest('.description');
-        console.log(nearestDes);
-        nearestDes.text("Hello");
-        // if (descriptionEls.indexOf(clickableEl)) {
-        //     descriptionEls.textContent = "Hello";
-        // }
-
-        // console.log(clickableEl.)
-
-        // descriptionEls.textContent = "Hello";
+            // descriptionEls.textContent = "Hello";
 
 
 
-        descriptionEls[2].textContent = '2';
-        console.log("Clicked");
-        nearestDes.textContent = "";
-    });
+            // descriptionEls[2].textContent = '2';
+            console.log("Clicked");
+            // nearestDes.textContent = "";
+        });
 
 
-}
+    }
 
-handleDates();
+    handleDates();
 
-updateText();
+    updateText();
 
 // setTimeBlockColors();
 
