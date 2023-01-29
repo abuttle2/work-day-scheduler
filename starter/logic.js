@@ -2,6 +2,24 @@
 let timeDisplayEl = $("#currentDay");
 let descriptionsEls = $(".description");
 
+let getSavedText = function () {
+    var textArr = [];
+    if (localStorage.getItem("descriptions")) {
+        textArr = JSON.parse(localStorage.getItem("descriptions"));
+
+        //Check if the object ID matches, and update the description to the saved localStorage description
+        for (let i = 0; i < descriptionsEls.length; i++) {
+            for (let j = 0; j < textArr.length; j++) {
+                if (textArr[j].id === i) {
+                    descriptionsEls[i].textContent = textArr[j].description;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+
 let displayTime = function () {
     var currentDateTime = moment().format('dddd, MMMM Do [at] hh:mm:ss a');
     timeDisplayEl.text(currentDateTime);
@@ -16,7 +34,7 @@ let pushDates = function () {
     const timeBlockEls = $(".time-block");
     var hoursArray = [];
 
-    //Iterate through each time block stores hours from html into an array
+    //Iterate through each time block. stores hours from html into an array
     for (var i = 0; i < timeBlockEls.length; i++) {
         var formattedHours = moment(timeBlockEls[i].textContent, "ha").format("HH");
         hoursArray.push(formattedHours);
@@ -53,49 +71,54 @@ let handleDates = function () {
             $(timeBlockEls[i]).next().addClass("present");
         }
     }
+}
 
 
-    let updateText = function () {
-        const descriptionEls = $(".description");
-        var clickableEl = $('.clickable-font');
+let updateText = function () {
+    var clickableEl = $('.clickable-font');
+    var descriptionArr = [];
 
-        var nearestDes = clickableEl.last('.description');
+    clickableEl.on('click', function () {
 
-        // console.log(descriptionEls);
+        var index = clickableEl.index(this);
 
-        // console.log(clickableEl);
+        var nearestDes = $(this).closest('tr').find('.description');
+        var getDes = nearestDes.val();
 
-        clickableEl.on('click', function () {
+        console.log(index);
 
-            // var nearestDes = $(this).closest('.description');
-            // console.log(nearestDes);
-            // nearestDes.text("Hello");
-            // if (descriptionEls.indexOf(clickableEl)) {
-            //     descriptionEls.textContent = "Hello";
-            // }
+        //Check if in storage
+        if (localStorage.getItem("descriptions")) {
+            descriptionArr = JSON.parse(localStorage.getItem("descriptions"));
+        }
 
-            var nearestDes = $(this).closest('tr').find('.description');
-            console.log(nearestDes.text("yo"));
+        //Replace existing data if the same element is saved again.
+        for (var i = 0; i < descriptionArr.length; i++) {
+            if (descriptionArr[i].id === index) {
+                descriptionArr.splice(i, 1);
+            }
+        }
 
-            // console.log(clickableEl.)
-
-            // descriptionEls.textContent = "Hello";
-
-
-
-            // descriptionEls[2].textContent = '2';
-            console.log("Clicked");
-            // nearestDes.textContent = "";
+        //Push current ID and description to description array
+        descriptionArr.push({
+            id: index,
+            description: getDes
         });
 
+        //Save as a string in local storage
+        localStorage.setItem("descriptions", JSON.stringify(descriptionArr));
 
-    }
+        console.log(descriptionArr);
+    });
 
-    handleDates();
 
-    updateText();
+}
 
-// setTimeBlockColors();
+getSavedText();
+
+handleDates();
+
+updateText();
 
 
 
