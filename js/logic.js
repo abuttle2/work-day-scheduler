@@ -19,15 +19,10 @@ let getSavedText = function () {
     }
 }
 
-
 let displayTime = function () {
     var currentDateTime = moment().format('dddd, MMMM Do [at] hh:mm:ss a');
     timeDisplayEl.text(currentDateTime);
 }
-
-setInterval(displayTime, 1000);
-
-// const currentHour = moment().format("ha");
 
 //Loop through the dates in HTML and store in an array
 let pushDates = function () {
@@ -47,6 +42,7 @@ let handleDates = function () {
     var plannerHours = pushDates()
     //Test time
     const currentTimeTest = moment().hours(11).format("HH");
+    const currentTime = moment().format("HH");
     var priorHoursArr = [];
     var futureHoursArr = [];
     var currentHour;
@@ -58,66 +54,51 @@ let handleDates = function () {
         var hourIndex = moment(plannerHours[i], "HH").format("HH");
 
         //Check the values which indicate the current hour and use index to style the elements
-        if (parseInt(hourIndex) < parseInt(currentTimeTest)) {
+        if (parseInt(hourIndex) < parseInt(currentTime)) {
             priorHoursArr.push(hourIndex);
             $(timeBlockEls[i]).next().addClass("past");
         }
-        if (parseInt(hourIndex) > parseInt(currentTimeTest)) {
+        if (parseInt(hourIndex) > parseInt(currentTime)) {
             futureHoursArr.push(hourIndex);
             $(timeBlockEls[i]).next().addClass("future");
         }
-        if (parseInt(hourIndex) === parseInt(currentTimeTest)) {
+        if (parseInt(hourIndex) === parseInt(currentTime)) {
             currentHour = hourIndex;
             $(timeBlockEls[i]).next().addClass("present");
         }
     }
 }
 
-
 let updateText = function () {
     var clickableEl = $('.clickable-font');
     var descriptionArr = [];
 
     clickableEl.on('click', function () {
-
         var index = clickableEl.index(this);
-
         var nearestDes = $(this).closest('tr').find('.description');
         var getDes = nearestDes.val();
-
-        console.log(index);
-
         //Check if in storage
         if (localStorage.getItem("descriptions")) {
             descriptionArr = JSON.parse(localStorage.getItem("descriptions"));
         }
-
         //Replace existing data if the same element is saved again.
         for (var i = 0; i < descriptionArr.length; i++) {
             if (descriptionArr[i].id === index) {
                 descriptionArr.splice(i, 1);
             }
         }
-
         //Push current ID and description to description array
         descriptionArr.push({
             id: index,
             description: getDes
         });
-
         //Save as a string in local storage
         localStorage.setItem("descriptions", JSON.stringify(descriptionArr));
-
-        console.log(descriptionArr);
     });
-
-
 }
-
+setInterval(displayTime, 1000);
 getSavedText();
-
 handleDates();
-
 updateText();
 
 
