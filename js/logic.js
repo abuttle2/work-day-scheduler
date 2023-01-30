@@ -1,4 +1,3 @@
-// handle displaying the time
 let timeDisplayEl = $("#currentDay");
 let descriptionsEls = $(".description");
 
@@ -19,6 +18,7 @@ let getSavedText = function () {
     }
 }
 
+//Update text with current time
 let displayTime = function () {
     var currentDateTime = moment().format('dddd, MMMM Do [at] hh:mm:ss a');
     timeDisplayEl.text(currentDateTime);
@@ -72,8 +72,11 @@ let handleDates = function () {
 let updateText = function () {
     var clickableEl = $('.clickable-font');
     var descriptionArr = [];
+    let header = $("header");
+    var storageTxt = $("<p>");
 
     clickableEl.on('click', function () {
+        storageTxt.fadeIn();
         var index = clickableEl.index(this);
         var nearestDes = $(this).closest('tr').find('.description');
         var getDes = nearestDes.val();
@@ -94,7 +97,13 @@ let updateText = function () {
         });
         //Save as a string in local storage
         localStorage.setItem("descriptions", JSON.stringify(descriptionArr));
+        storageTxt.text("Data added to localStorage");
+        header.append(storageTxt);
+        storageTxt.fadeOut(1000);
+
     });
+
+    console.log(header);
 }
 setInterval(displayTime, 1000);
 getSavedText();
