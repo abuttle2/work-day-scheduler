@@ -72,11 +72,8 @@ let handleDates = function () {
 let updateText = function () {
     var clickableEl = $('.clickable-font');
     var descriptionArr = [];
-    let header = $("header");
-    var storageTxt = $("<p>");
 
     clickableEl.on('click', function () {
-        storageTxt.fadeIn();
         var index = clickableEl.index(this);
         var nearestDes = $(this).closest('tr').find('.description');
         var getDes = nearestDes.val();
@@ -97,19 +94,17 @@ let updateText = function () {
         });
         //Save as a string in local storage
         localStorage.setItem("descriptions", JSON.stringify(descriptionArr));
-        storageTxt.text("Data added to localStorage");
-        header.append(storageTxt);
-        storageTxt.fadeOut(1000);
+        $(".saved").text("Data added to localStorage ✓");
 
+        setTimeout(function () {
+            $(".saved").text("");
+        }, 1000);
     });
-
-    console.log(header);
 }
 setInterval(displayTime, 1000);
 getSavedText();
 handleDates();
 updateText();
-
 
 
 
