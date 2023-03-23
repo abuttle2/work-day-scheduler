@@ -18,4 +18,4 @@ This project uses the MIT License.
 
 ## Link
 
-https://abuttle2.github.io/daily-planner/
+https://abuttle2.github.io/work-day-scheduler/
